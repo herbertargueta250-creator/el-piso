@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="es-GT">
 <head>
-<script src="https://cloudflare.com"></script>
+<script src="https://unpkg.com"></script>
+
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,9 +201,16 @@ footer{margin-top:44px;font-family:'Space Mono',monospace;font-size:11px;letter-
    Para conectar Supabase, ver las funciones cargarRanking()
    y guardarPuntaje() mas abajo.
 ======================================================= */
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
-const supabase = supabase.createClient ? supabase.createClient(supabaseUrl, supabaseKey) : Supabase.createClient(supabaseUrl, supabaseKey);
+const _supabaseUrl = 'YOUR_SUPABASE_URL'; 
+const _supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+
+// This safely checks how the browser loaded the tool before starting
+const supabase = window.supabase ? window.supabase.createClient(_supabaseUrl, _supabaseKey) : null;
+
+if (!supabase) {
+  console.warn("Database tool is still loading or blocked by firewall.");
+}
+
 
 
 // Function 1: Saves a player's score to your database
